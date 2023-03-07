@@ -24,4 +24,19 @@ public class Lector {
         br.close();
         return -1;
     }
+
+    //lee(): devolverá un HashMap<Integer, Double> con todos los identificadores como
+    //claves, y sus correspondientes notas como valores.
+    public HashMap<Integer, Double> lee() throws IOException {
+        HashMap<Integer, Double> HashMap = new HashMap<>();
+        FileReader fr = new FileReader(file);
+        BufferedReader br = new BufferedReader(fr);
+        String linea;
+        while ((linea = br.readLine()) != null) {
+            String[] campos = linea.split(",");
+            HashMap.put(Integer.parseInt(campos[0]), Double.parseDouble(campos[1]));
+        }
+        br.close();
+        return HashMap;
+    }
 }
