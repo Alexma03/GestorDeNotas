@@ -1,6 +1,7 @@
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
 
 public class Escritor {
@@ -16,7 +17,12 @@ public class Escritor {
         bw.close();
     }
 
-    public void escribe(HashMap<Integer, Double> HashMap) {
-
+    public void escribe(HashMap<Integer, Double> HashMap) throws IOException {
+        FileWriter fw = new FileWriter(file, true);
+        BufferedWriter bw = new BufferedWriter(fw);
+        for (Integer id : HashMap.keySet()) {
+            bw.write(String.format("%d,%.2f\n", id, HashMap.get(id)));
+        }
+        bw.close();
     }
 }
