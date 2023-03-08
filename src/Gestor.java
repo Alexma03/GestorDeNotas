@@ -4,12 +4,18 @@ public class Gestor {
     public static void main(String[] args) {
         switch (args[0]) {
             case "w" -> {
-                Escritor escritor = new Escritor(args[1]);
+                if (args.length < 4) {
+                    System.err.println("Error: argumentos insuficientes");
+                    return;
+                }
                 try {
+                    Escritor escritor = new Escritor(args[1]);
                     escritor.escribe(Integer.parseInt(args[2]), Double.parseDouble(args[3]));
                     System.out.println("Guardado el id " + args[2] + " con nota " + args[3] + " en el fichero " + args[1]);
-                } catch (Exception e) {
-                    System.err.println("El id " + args[2] + " ya existe");
+                } catch (NumberFormatException e) {
+                    System.err.println("Error: argumentos inválidos");
+                } catch (IOException e) {
+                    System.err.println("Error al crear el escritor");
                 }
             }
             case "r" -> {
