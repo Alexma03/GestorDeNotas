@@ -1,7 +1,4 @@
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.HashMap;
 
 public class Lector {
@@ -12,15 +9,19 @@ public class Lector {
 
     /**
      * Método que lee una nota de un fichero y la devuelve
-     * @param id
+     * @param id id de la nota
      * @return nota
      * @throws IOException           si no se puede leer el fichero
      * @throws NumberFormatException    si el id no es un número
      * @throws IllegalArgumentException si el id no existe
+     * @throws FileNotFoundException si no se puede leer el fichero
      */
     public double lee(int id) throws IOException {
         FileReader fr = new FileReader(file);
         BufferedReader br = new BufferedReader(fr);
+        if (!file.canRead()){
+            throw new FileNotFoundException("No se puede leer el fichero");
+        }
         String linea;
         while ((linea = br.readLine()) != null) {
             String[] campos = linea.split(" ");
@@ -39,11 +40,15 @@ public class Lector {
      * @throws IOException           si no se puede leer el fichero
      * @throws NumberFormatException    si el id no es un número
      * @throws IllegalArgumentException si el id no existe
+     * @throws FileNotFoundException si no se puede leer el fichero
      */
     public HashMap<Integer, Double> lee() throws IOException {
         HashMap<Integer, Double> HashMap = new HashMap<>();
         FileReader fr = new FileReader(file);
         BufferedReader br = new BufferedReader(fr);
+        if (!file.canRead()){
+            throw new FileNotFoundException("No se puede leer el fichero");
+        }
         String linea;
         while ((linea = br.readLine()) != null) {
             String[] campos = linea.split(" ");

@@ -3,30 +3,19 @@ import java.util.HashMap;
 
 public class Gestor {
     public static void main(String[] args) {
-        HashMap<Integer, Double> lectura;
         switch (args[0]) {
-            case "w" -> {
-                write(args);
-            }
-            case "r" -> {
-                read(args);
-            }
-            case "m" -> {
-                modificar(args);
-            }
-            case "d" -> {
-                delete(args);
-            }
+            case "w" -> write(args);
+            case "r" -> read(args);
+            case "m" -> modificar(args);
+            case "d" -> delete(args);
             default -> System.out.println("Argumentos no válidos");
         }
 
     }
 
-    //JavaDoc delete
     /**
      * Método que elimina una nota de un fichero
-     * @param args
-     * @throws IOException           si no se puede leer el fichero
+     * @param args 0: w, 1: nombreFichero, 2: id, 3: nota
      * @throws NumberFormatException    si el id no es un número
      * @throws IllegalArgumentException si el id no existe
      */
@@ -50,8 +39,7 @@ public class Gestor {
     //JavaDoc modificar
     /**
      * Método que modifica una nota de un fichero
-     * @param args
-     * @throws IOException           si no se puede leer el fichero
+     * @param args 0: w, 1: nombreFichero, 2: id, 3: nota
      * @throws NumberFormatException    si el id no es un número
      * @throws IllegalArgumentException si el id no existe
      */
@@ -79,8 +67,7 @@ public class Gestor {
     //JavaDoc read
     /**
      * Método que lee una nota de un fichero
-     * @param args
-     * @throws IOException           si no se puede leer el fichero
+     * @param args 0: w, 1: nombreFichero, 2: id, 3: nota
      * @throws NumberFormatException    si el id no es un número
      * @throws IllegalArgumentException si el id no existe
      */
@@ -100,14 +87,17 @@ public class Gestor {
             }
         } catch (IOException e) {
             System.out.println(e.getMessage());
+        } catch (NumberFormatException e) {
+            System.out.println("El id " + args[2] + " no es un número");
+        } catch (Exception e) {
+            System.out.println("El id " + args[2] + " ya existe");
         }
     }
 
     //JavaDoc write
     /**
      * Método que escribe una nota en un fichero
-     * @param args
-     * @throws IOException           si no se puede leer el fichero
+     * @param args 0: w, 1: nombreFichero, 2: id, 3: nota
      * @throws NumberFormatException    si el id no es un número
      * @throws IllegalArgumentException si el id ya existe
      */
@@ -124,6 +114,8 @@ public class Gestor {
             System.out.println("Error al crear el escritor");
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
+        } catch (Exception e) {
+            System.out.println("El id " + args[2] + " ya existe");
         }
     }
 }

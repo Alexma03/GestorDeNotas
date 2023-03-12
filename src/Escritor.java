@@ -17,16 +17,20 @@ public class Escritor {
 
     /**
      * Método que escribe una nota en un fichero
-     * @param id
-     * @param nota
+     * @param id   id de la nota
+     * @param nota nota
      * @throws IOException           si no se puede leer el fichero
      * @throws NumberFormatException    si el id no es un número
      * @throws IllegalArgumentException si el id no existe
+     * @throws FileNotFoundException si no se puede escribir en el fichero
      */
     public void escribe(int id, double nota) throws IOException {
         HashMap<Integer, Double> notas = new HashMap<>();
         // Leer el contenido del fichero y añadir los valores al HashMap
         BufferedReader br = new BufferedReader(new FileReader(file));
+        if (!file.canRead()){
+            throw new FileNotFoundException("No se puede leer el fichero");
+        }
         String linea;
         while ((linea = br.readLine()) != null) {
             String[] partes = linea.split(" ");
@@ -47,10 +51,11 @@ public class Escritor {
 
     /**
      * Método que escribe un HashMap en un fichero
-     * @param HashMap
+     * @param HashMap HashMap de id y nota
      * @throws IOException           si no se puede leer el fichero
      * @throws NumberFormatException    si el id no es un número
      * @throws IllegalArgumentException si el id no existe
+     * @throws FileNotFoundException si no se puede escribir en el fichero
      */
     public void escribe(HashMap<Integer, Double> HashMap) throws IOException {
         FileWriter fw = new FileWriter(file);
