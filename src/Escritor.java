@@ -8,26 +8,8 @@ public class Escritor {
         file = new File(nombreFichero);
     }
 
-    /*public void escribe(int id, double nota) throws IOException {
-        FileWriter fw = null;
-        BufferedWriter bw = null;
-        try {
-            fw = new FileWriter(file, true);
-            bw = new BufferedWriter(fw);
-            bw.write(String.format(Locale.US,"%d %.2f\n", id, nota));
-        } finally {
-            if (bw != null) {
-                bw.close();
-            }
-            if (fw != null) {
-                fw.close();
-            }
-        }
-    }*/
-
     public void escribe(int id, double nota) throws IOException {
-        HashMap<Integer, Double> notas = new HashMap<Integer, Double>();
-
+        HashMap<Integer, Double> notas = new HashMap<>();
         // Leer el contenido del fichero y añadir los valores al HashMap
         BufferedReader br = new BufferedReader(new FileReader(file));
         String linea;
@@ -39,24 +21,12 @@ public class Escritor {
 
         // Comprobar si el id ya existe en el HashMap
         if (notas.containsKey(id)) {
-            System.out.println("El id ya existe en el fichero.");
-            return;
+            throw new IllegalArgumentException("El ID ya existe en el mapa.");
         }
 
         // Escribir la nueva nota en el fichero
-        FileWriter fw = null;
-        BufferedWriter bw = null;
-        try {
-            fw = new FileWriter(file, true);
-            bw = new BufferedWriter(fw);
-            bw.write(String.format(Locale.US,"%d %.2f\n", id, nota));
-        } finally {
-            if (bw != null) {
-                bw.close();
-            }
-            if (fw != null) {
-                fw.close();
-            }
+        try (FileWriter fw = new FileWriter(file, true); BufferedWriter bw = new BufferedWriter(fw)) {
+            bw.write(String.format(Locale.US, "%d %.2f\n", id, nota));
         }
     }
 
@@ -64,6 +34,9 @@ public class Escritor {
     public void escribe(HashMap<Integer, Double> HashMap) throws IOException {
         FileWriter fw = new FileWriter(file);
         BufferedWriter bw = new BufferedWriter(fw);
+        if (!file.canWrite()){
+            throw new FileNotFoundException("No se puede escribir en el fichero");
+        }
         for (Integer id : HashMap.keySet()) {
             bw.write(String.format(Locale.US, "%d %.2f\n", id, HashMap.get(id)));
         }
