@@ -10,6 +10,14 @@ public class Lector {
         file = new File(nombreFichero);
     }
 
+    /**
+     * Método que lee una nota de un fichero y la devuelve
+     * @param id
+     * @return nota
+     * @throws IOException           si no se puede leer el fichero
+     * @throws NumberFormatException    si el id no es un número
+     * @throws IllegalArgumentException si el id no existe
+     */
     public double lee(int id) throws IOException {
         FileReader fr = new FileReader(file);
         BufferedReader br = new BufferedReader(fr);
@@ -25,7 +33,13 @@ public class Lector {
         return -1;
     }
 
-
+    /**
+     * Método que lee un fichero y lo devuelve en un HashMap
+     * @return HashMap
+     * @throws IOException           si no se puede leer el fichero
+     * @throws NumberFormatException    si el id no es un número
+     * @throws IllegalArgumentException si el id no existe
+     */
     public HashMap<Integer, Double> lee() throws IOException {
         HashMap<Integer, Double> HashMap = new HashMap<>();
         FileReader fr = new FileReader(file);

@@ -6,8 +6,23 @@ public class Escritor {
     private final File file;
     public Escritor(String nombreFichero) {
         file = new File(nombreFichero);
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
+    /**
+     * Método que escribe una nota en un fichero
+     * @param id
+     * @param nota
+     * @throws IOException           si no se puede leer el fichero
+     * @throws NumberFormatException    si el id no es un número
+     * @throws IllegalArgumentException si el id no existe
+     */
     public void escribe(int id, double nota) throws IOException {
         HashMap<Integer, Double> notas = new HashMap<>();
         // Leer el contenido del fichero y añadir los valores al HashMap
@@ -21,7 +36,7 @@ public class Escritor {
 
         // Comprobar si el id ya existe en el HashMap
         if (notas.containsKey(id)) {
-            throw new IllegalArgumentException("El ID ya existe en el mapa.");
+            throw new IllegalArgumentException("El ID ya existe.");
         }
 
         // Escribir la nueva nota en el fichero
@@ -30,7 +45,13 @@ public class Escritor {
         }
     }
 
-
+    /**
+     * Método que escribe un HashMap en un fichero
+     * @param HashMap
+     * @throws IOException           si no se puede leer el fichero
+     * @throws NumberFormatException    si el id no es un número
+     * @throws IllegalArgumentException si el id no existe
+     */
     public void escribe(HashMap<Integer, Double> HashMap) throws IOException {
         FileWriter fw = new FileWriter(file);
         BufferedWriter bw = new BufferedWriter(fw);
